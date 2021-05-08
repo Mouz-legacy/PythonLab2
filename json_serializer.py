@@ -32,7 +32,6 @@ class JsonSerializer:
     @staticmethod
     def dict_to_code(obj):
         return JsonSerializer.types.CodeType(obj["co_argcount"],
-                                             obj["co_posonlyargcount"],
                                              obj["co_kwonlyargcount"],
                                              obj["co_nlocals"],
                                              obj["co_stacksize"],
@@ -449,7 +448,6 @@ class JsonSerializer:
     @staticmethod
     def code_to_dict(obj):
         return {"##code_type##": {"co_argcount": obj.co_argcount,
-                                  "co_posonlyargcount": obj.co_posonlyargcount,
                                   "co_kwonlyargcount": obj.co_kwonlyargcount,
                                   "co_nlocals": obj.co_nlocals,
                                   "co_stacksize": obj.co_stacksize,
@@ -547,7 +545,9 @@ class JsonSerializer:
             raise TypeError()
 
     @staticmethod
-    def dumps(obj, indent=None):
+    def dumps(obj, sort_keys=False, indent=None):
+        JsonSerializer.f_found = {}
+        JsonSerializer.sort_keys = sort_keys
         if isinstance(indent, int) and indent > 0:
             step = " " * indent
             res = JsonSerializer._dumps(obj, step)
@@ -558,9 +558,9 @@ class JsonSerializer:
         return res
 
     @staticmethod
-    def dump(obj, fp, indent=None):
+    def dump(obj, fp, sort_keys=False, indent=None):
         try:
             with open(fp, 'w') as file:
-                file.write(JsonSerializer.dumps(obj, indent))
+                file.write(JsonSerializer.dumps(obj, sort_keys, indent))
         except FileNotFoundError:
             raise FileNotFoundError("file doesn't exist")
