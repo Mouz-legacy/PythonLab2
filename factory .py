@@ -10,14 +10,3 @@ class Creator:
         else:
             print("Other serializers are not yet supported")
             pass
-
-
-class TestSerializer:
-
-    def __init__(self, n="Petya", s="Petrov"):
-        self.name = n
-        self.surname = s
-
-
-if __name__ == '__main__':
-    print("There must be tests")
