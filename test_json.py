@@ -6,7 +6,7 @@ serializer = Creator.factory_method("json")
 multiplication = test_class.Tester
 
 
-class UnitTests(unittest.TestCase):
+class UnitTestsJson(unittest.TestCase):
     def test_counter(self):
         self.assertEqual(test_class.count_numbers(10, 20),
                          serializer.loads(serializer.dumps(test_class.count_numbers(10, 20))))
